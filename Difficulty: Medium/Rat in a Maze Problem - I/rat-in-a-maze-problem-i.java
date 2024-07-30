@@ -2,6 +2,7 @@
 // Initial Template for Java
 
 import java.util.*;
+
 class Rat {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -14,11 +15,10 @@ class Rat {
                 for (int j = 0; j < n; j++) a[i][j] = sc.nextInt();
 
             Solution obj = new Solution();
-            ArrayList<String> res = obj.findPath(a, n);
+            ArrayList<String> res = obj.findPath(a);
             Collections.sort(res);
             if (res.size() > 0) {
-                for (int i = 0; i < res.size(); i++)
-                    System.out.print(res.get(i) + " ");
+                for (int i = 0; i < res.size(); i++) System.out.print(res.get(i) + " ");
                 System.out.println();
             } else {
                 System.out.println(-1);
@@ -30,36 +30,31 @@ class Rat {
 // } Driver Code Ends
 
 
-// User function Template for Java
 
-// m is the given matrix and n is the order of matrix
+
 class Solution {
-    public static void findThePath(int i,int j,int [][]grid,ArrayList<String>ans,
-    String s,int n,int m,boolean[][]vis){
-        if(i<0 || i==n || j<0 || j==m || grid[i][j]==0 || vis[i][j]==true){
-            return;
-        }
-        if(i==n-1 && j==m-1 && grid[i][j]==1 && vis[i][j]==false){
-            ans.add(s);
-            return;
-        }
-        
-        if(vis[i][j]==false){
-            vis[i][j]=true;
-        findThePath(i+1,j,grid,ans,s+'D',n,m,vis);
-         findThePath(i,j-1,grid,ans,s+'L',n,m,vis);
-          findThePath(i,j+1,grid,ans,s+'R',n,m,vis);
-           findThePath(i-1,j,grid,ans,s+'U',n,m,vis);
-           vis[i][j]=false;
-        }
+ 
+    public ArrayList<String> findPath(int[][] mat) {
+        ArrayList<String> res=new ArrayList<>();
+        recurse(mat,0,0,"",res);
+        return res;
     }
-    public static ArrayList<String> findPath(int[][] m, int n) {
-        // Your code here
-        if(m[0][0]==0)return new ArrayList<>();
-        boolean vis[][]=new boolean[n][n];
-        ArrayList<String>ans = new ArrayList<>();
-        findThePath(0,0,m,ans,"",n,n,vis);
+    static void recurse(int[][] mat,int r,int c,String res,ArrayList<String> ans){
+        if (r==mat.length-1 && c==mat[0].length-1 && mat[r][c]==1){
+            ans.add(res);
+            return;
+        }
+        if (r<0 || r>=mat.length || c<0 || c>=mat[0].length) return;
+        if (mat[r][c]==0 || mat[r][c]==-1) return;
+        mat[r][c]=-1;
+     
+        recurse(mat,r-1,c,res+"U",ans);
+        recurse(mat,r+1,c,res+"D",ans);
+        recurse(mat,r,c-1,res+"L",ans);
+        recurse(mat,r,c+1,res+"R",ans);
+        mat[r][c]=1;
+      
         
-        return ans;
+        
     }
 }
