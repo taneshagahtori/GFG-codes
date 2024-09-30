@@ -112,16 +112,21 @@ class Solution {
     // values of both the BST in a sorted order.
     public List<Integer> merge(Node root1, Node root2) {
         // Write your code here
-        List<Integer> ans = new ArrayList<>();
-        helper(root1, ans);
-        helper(root2, ans);
-        Collections.sort(ans);
-        return ans;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        trace(root1,list);
+        trace(root2,list);
+        Collections.sort(list);
+        return list;
+        
     }
-    private void helper(Node root, List<Integer> ans){
-        if(root == null) return;
-        helper(root.left, ans);
-        ans.add(root.data);
-        helper(root.right, ans);
+    
+    public void trace(Node root, ArrayList<Integer> list){
+        if(root!=null)
+        list.add(root.data);
+        if(root.left!=null)
+        trace(root.left,list);
+        if(root.right!=null)
+        trace(root.right,list);
     }
+    
 }
