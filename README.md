@@ -1,1 +1,1 @@
-# GFG-codes
+# GFG solutions 
